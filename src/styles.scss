@@ -50,3 +50,7 @@ body {
   .isPrinting > * { display: none; }
   .isPrinting app-print-layout { display: block; }
 }
+
+body {
+  -webkit-print-color-adjust: exact;
+}
