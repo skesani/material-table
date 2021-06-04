@@ -1,14 +1,7 @@
-<mat-table [dataSource]="dataSource" class="mat-elevation-z8 print-table">
-
+<mat-table [dataSource]="dataSource" class="mat-elevation-z8 print-table demo-table">
   <ng-container *ngFor="let column of columns; let i = index" matColumnDef="{{ column.field }}">
     <mat-header-cell *matHeaderCellDef>{{ column.field }}</mat-header-cell>
-    <div *ngIf="column.field === 'PhotoURL1';else other_content">
-      <mat-cell *matCellDef="let row"> <img width="100px" height="100px" [src]="row[column.field]" alt="image"></mat-cell>
-    </div>
-    <ng-template #other_content>
       <mat-cell *matCellDef="let row"> {{row[column.field]}}</mat-cell>
-    </ng-template>
-
   </ng-container>
   <mat-header-row mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
@@ -17,7 +10,5 @@
     <mat-cell colspan="999" *matCellDef="let group">
     </mat-cell>
   </ng-container>
-
   <mat-row *matRowDef="let row; columns: ['groupHeader']; when: isGroup" (click)="groupHeaderClick(row)"> </mat-row>
-
 </mat-table>

@@ -34,7 +34,6 @@ export class RowGroupPrintComponent implements OnInit {
 
   constructor(
     protected dataSourceService: CarTableDataService,  private printService: PrintService) {
-    alert('cjnknkfnakfneknakfnkan');
     this.columns = [{
       field: 'PersonID'
     }, {

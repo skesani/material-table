@@ -1,6 +1,10 @@
 <div class="app">
-  <app-sidenav>
+  <app-sidenav *ngIf="!printService.isPrinting">
     <app-toolbar></app-toolbar>
     <router-outlet></router-outlet>
   </app-sidenav>
+</div>
+
+<div [class.isPrinting]="printService.isPrinting">
+  <router-outlet name="print"></router-outlet>
 </div>

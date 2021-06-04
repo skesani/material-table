@@ -4,10 +4,36 @@ table,  mat-cell, mat-header-cell, mat-footer-cell {
   padding-right: 1%;
 }
 
-.print-table {
-  page-break-after: always;
+.mat-elevation-z8 {
+  overflow-x: auto;
 }
 
-.print-table:last-child {
-  page-break-after: avoid;
+.demo-table {
+  width: 100%;
+}
+
+.mat-row .mat-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}
+
+.mat-row:hover .mat-cell {
+  border-color: currentColor;
+}
+
+.demo-row-is-clicked {
+  font-weight: bold;
+}
+
+td.mat-cell{
+  border-bottom-style: none;
+}
+
+th.mat-header-cell{
+  border-bottom-style: none;
+}
+
+mat-header-row, mat-row {
+  border-bottom-style: none;
 }

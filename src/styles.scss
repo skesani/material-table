@@ -44,3 +44,9 @@ body {
   margin: 0;
   padding: 0;
 }
+
+
+@media print {
+  .isPrinting > * { display: none; }
+  .isPrinting app-print-layout { display: block; }
+}

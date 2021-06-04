@@ -8,4 +8,6 @@ import {PrintService} from './print-layout/print.service';
 })
 export class AppComponent {
   title = 'material-download';
+  constructor(public printService: PrintService) {
+  }
 }
