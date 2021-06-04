@@ -1,0 +1,13 @@
+table,  mat-cell, mat-header-cell, mat-footer-cell {
+  word-break:break-all;
+  word-wrap:break-word;
+  padding-right: 1%;
+}
+
+.print-table {
+  page-break-after: always;
+}
+
+.print-table:last-child {
+  page-break-after: avoid;
+}

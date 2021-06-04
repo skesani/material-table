@@ -1,0 +1,31 @@
+<div [class.isPrinting]="printService.isPrinting">
+  <div style="text-align:center">
+    <button (click)="onPrintTable()">PRINT TABLE</button>
+  </div>
+</div>
+
+<mat-table [dataSource]="dataSource" class="mat-elevation-z8 print-table">
+  <ng-container *ngFor="let column of columns; let i = index" matColumnDef="{{ column.field }}">
+    <mat-header-cell *matHeaderCellDef>{{ column.field }}</mat-header-cell>
+    <div *ngIf="column.field === 'PhotoURL1';else other_content">
+      <mat-cell *matCellDef="let row"> <img width="100px" height="100px" [src]="row[column.field]" alt="image"></mat-cell>
+    </div>
+    <ng-template #other_content>
+      <mat-cell *matCellDef="let row"> {{row[column.field]}}</mat-cell>
+    </ng-template>
+
+  </ng-container>
+  <mat-header-row mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  <!-- Group header -->
+  <ng-container matColumnDef="groupHeader">
+    <mat-cell colspan="999" *matCellDef="let group">
+      <mat-icon *ngIf="group.expanded">expand_more</mat-icon>
+      <mat-icon *ngIf="!group.expanded">chevron_right</mat-icon>
+      <strong>{{groupByColumns[group.level-1]}} = {{group[groupByColumns[group.level-1]]}} ({{group.totalCounts}})</strong>
+    </mat-cell>
+  </ng-container>
+
+  <mat-row *matRowDef="let row; columns: ['groupHeader']; when: isGroup" (click)="groupHeaderClick(row)"> </mat-row>
+
+</mat-table>
