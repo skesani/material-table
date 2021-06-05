@@ -4,7 +4,7 @@
   </div>
 </div>
 
-<mat-table [dataSource]="dataSource" class="mat-elevation-z8 print-table demo-table">
+<mat-table style="margin: 1%" [dataSource]="dataSource" class="mat-elevation-z8 print-table demo-table">
   <ng-container *ngFor="let column of columns; let i = index" matColumnDef="{{ column.field }}">
     <mat-header-cell *matHeaderCellDef>{{ column.field }}</mat-header-cell>
     <mat-cell *matCellDef="let row"> {{row[column.field]}}</mat-cell>

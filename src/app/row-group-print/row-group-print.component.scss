@@ -1,38 +1,6 @@
-table,  mat-cell, mat-header-cell, mat-footer-cell {
-  word-break:break-all;
-  word-wrap:break-word;
-  padding-right: 1%;
+mat-row:nth-child(even) {
+  background: #CCC
 }
-
-.print-table {
-  page-break-after: always;
-}
-
-.print-table:last-child {
-  page-break-after: avoid;
-}
-
-.mat-elevation-z8 {
-  overflow-x: auto;
-}
-
-.demo-table {
-  width: 100%;
-}
-
-.mat-row .mat-cell {
-  border-bottom: 1px solid transparent;
-  border-top: 1px solid transparent;
-  cursor: pointer;
-}
-
-.mat-row:hover .mat-cell {
-  border-color: currentColor;
-}
-
-.demo-row-is-clicked {
-  font-weight: bold;
-}
-mat-header-row, mat-row{
-  border-bottom-style: none;
+mat-row:nth-child(odd) {
+  background: #FFF
 }

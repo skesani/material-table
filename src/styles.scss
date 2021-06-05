@@ -40,17 +40,139 @@ $dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 /************************
  Default global styles
 ************************/
-body {
-  margin: 0;
-  padding: 0;
-}
-
-
-@media print {
-  .isPrinting > * { display: none; }
-  .isPrinting app-print-layout { display: block; }
-}
 
 body {
   -webkit-print-color-adjust: exact;
+}
+
+@media print {
+  .isPrinting > * {
+    display: none;
+  }
+  .isPrinting app-print-layout {
+    display: block;
+  }
+
+  #content, #page {
+    width: 100%;
+    margin: 0;
+    float: none;
+  }
+  @page {
+    margin: .5cm;
+    size: A4 landscape;
+  }
+
+  h1 {
+    font-size: 24pt;
+  }
+
+  h2, h3, h4, h5 {
+    font-size: 14pt;
+    margin-top: 25px;
+  }
+
+
+  a {
+    page-break-inside: avoid
+  }
+
+  blockquote {
+    page-break-inside: avoid;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+    page-break-inside: avoid
+  }
+
+  img {
+    page-break-inside: avoid;
+    page-break-after: avoid;
+  }
+
+  table, pre {
+    page-break-inside: avoid
+  }
+
+  ul, ol, dl {
+    page-break-before: avoid
+  }
+
+
+  a:link, a:visited, a {
+    background: transparent;
+    color: #520;
+    font-weight: bold;
+    text-decoration: underline;
+    text-align: left;
+  }
+
+  a {
+    page-break-inside: avoid
+  }
+
+  a[href^=http]:after {
+    content: " <" attr(href) "> ";
+  }
+
+  img {
+    content: "";
+  }
+
+  article a[href^="#"]:after {
+    content: "";
+  }
+
+  a:not(:local-link):after {
+    content: " <" attr(href) "> ";
+  }
+
+  .entry iframe, ins {
+    display: none;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    line-height: 0 !important;
+    white-space: nowrap;
+  }
+
+  .embed-youtube, .embed-responsive {
+    position: absolute;
+    height: 0;
+    overflow: hidden;
+  }
+
+  .entry:after {
+    content: "";
+    color: #999 !important;
+    font-size: 1em;
+    padding-top: 30px;
+  }
+
+  #header:before {
+    content: "";
+    color: #777 !important;
+    font-size: 1em;
+    padding-top: 30px;
+    text-align: center !important;
+  }
+
+  p, address, li, dt, dd, blockquote {
+    font-size: 100%
+  }
+
+  code, pre {
+    font-family: "Courier New", Courier, mono, serif
+  }
+
+  ul, ol {
+    list-style: square;
+    margin-left: 18pt;
+    margin-bottom: 20pt;
+  }
+
+  li {
+    line-height: 1.6em;
+  }
 }

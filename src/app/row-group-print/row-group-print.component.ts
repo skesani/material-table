@@ -35,32 +35,32 @@ export class RowGroupPrintComponent implements OnInit {
   constructor(
     protected dataSourceService: CarTableDataService,  private printService: PrintService) {
     this.columns = [{
-      field: 'PersonID'
+      field: 'name'
     }, {
-      field: 'PhotoURL'
+      field: 'role_type'
     }, {
-      field: 'BirthDate'
+      field: 'phone'
     }, {
-      field: 'ParliamentaryName'
+      field: 'description'
     }, {
-      field: 'PreferredName'
+      field: 'party'
     }, {
-      field: 'GenderTypeID'
+      field: 'district'
     }, {
-      field: 'IsCurrent'
+      field: 'enddate'
     }];
     this.displayedColumns = this.columns.map(column => column.field);
-    this.groupByColumns = ['GenderTypeID'];
+    // this.groupByColumns = ['district'];
   }
 
   ngOnInit(): void {
     this.dataSourceService.getAllData()
       .subscribe(
-        (data: any) => {
-          data.forEach((item, index) => {
-            item.PersonID = index + 1;
+        ({objects}: any) => {
+          objects.forEach((item, index) => {
+            item.name = item.person.name;
           });
-          this._alldata = data;
+          this._alldata = objects;
           this.dataSource.data = this.addGroups(this._alldata, this.groupByColumns);
           this.dataSource.filterPredicate = this.customFilterPredicate.bind(this);
           this.dataSource.filter = performance.now().toString();

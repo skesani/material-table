@@ -12,6 +12,6 @@ export class CarTableDataService {
   }
 
   getAllData(): Observable<any[]> {
-    return this.http.get<any[]>('https://data.parliament.scot/api/members');
+    return this.http.get<any[]>('https://www.govtrack.us/api/v2/role?current=true&role_type=representative&limit=500');
   }
 }

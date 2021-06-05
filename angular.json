@@ -124,5 +124,8 @@
       }
     }
   },
-  "defaultProject": "material-download"
+  "defaultProject": "material-download",
+  "cli": {
+    "analytics": false
+  }
 }
