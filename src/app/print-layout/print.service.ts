@@ -7,6 +7,15 @@ import {Router} from '@angular/router';
 export class PrintService implements OnDestroy {
   private state: 'close' | 'open' = 'close';
   isPrinting = false;
+  private _option: string;
+
+  getOption(): any {
+    return this._option;
+  }
+
+  setOption(value: string): any {
+    this._option = value;
+  }
 
   constructor(private router: Router) {
   }
@@ -28,19 +37,21 @@ export class PrintService implements OnDestroy {
     }
   }
 
-  printTableDocument(documentName: string): void {
+  printTableDocument(documentName: string, option?: string): void {
     this.isPrinting = true;
-    this.router.navigate(['/',
-      { outlets: {
-          print: ['print', documentName]
-        }}]);
+    this.setOption(option);
+   // this.router.navigate(['print', documentName]);
+    this.router.navigate([{ outlets: { print: ['print', documentName] } }], { skipLocationChange: true });
+
   }
 
   onDataReady(): void {
     setTimeout(() => {
-      window.print();
+      const onPrintFinished = (printed) => console.log('do something...');
+      onPrintFinished(window.print());
       this.isPrinting = false;
-      this.router.navigate([{ outlets: { print: null }}]);
+      this.setOption(null);
+      this.router.navigateByUrl('table');
     });
   }
 

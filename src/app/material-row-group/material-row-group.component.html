@@ -1,12 +1,17 @@
 <div [class.isPrinting]="printService.isPrinting">
-  <div style="text-align:center">
-    <button (click)="onPrintTable()">PRINT TABLE</button>
-  </div>
+  <section>
+    <div class="example-button-row">
+      <button mat-raised-button color="basic" (click)="onPrintTable()">PRINT TABLE</button>
+      <button mat-raised-button color="basic" (click)="onPrintTable('4')">PRINT TABLE DISTRICT 4</button>
+    </div>
+  </section>
 </div>
 
 <mat-table style="margin: 1%" [dataSource]="dataSource" class="mat-elevation-z8 print-table demo-table">
   <ng-container *ngFor="let column of columns; let i = index" matColumnDef="{{ column.field }}">
-    <mat-header-cell *matHeaderCellDef>{{ column.field }}</mat-header-cell>
+    <mat-header-cell style="page-break-inside: avoid; font-size: large; font-weight: bold; color: steelblue" *matHeaderCellDef>
+      {{column.field === 'role_type' ? 'ROLE' : column.field?.toUpperCase()}}
+    </mat-header-cell>
     <mat-cell *matCellDef="let row"> {{row[column.field]}}</mat-cell>
 
   </ng-container>

@@ -5,6 +5,6 @@
   </app-sidenav>
 </div>
 
-<div [class.isPrinting]="printService.isPrinting">
+<div *ngIf="printService.isPrinting">
   <router-outlet name="print"></router-outlet>
 </div>

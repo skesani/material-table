@@ -149,7 +149,7 @@ export class MaterialRowGroupComponent implements OnInit {
     return item.level;
   }
 
-  onPrintTable(): void {
-    this.printService.printTableDocument('printing');
+  onPrintTable(option?: string): void {
+    this.printService.printTableDocument('printing', option);
   }
 }

@@ -60,6 +60,9 @@ export class RowGroupPrintComponent implements OnInit {
           objects.forEach((item, index) => {
             item.name = item.person.name;
           });
+          if (this.printService.getOption() !== null  && this.printService.getOption() !== undefined) {
+            objects = objects.filter(x => x.district.toString() === this.printService.getOption());
+          }
           this._alldata = objects;
           this.dataSource.data = this.addGroups(this._alldata, this.groupByColumns);
           this.dataSource.filterPredicate = this.customFilterPredicate.bind(this);
