@@ -1,6 +1,6 @@
 <mat-table [dataSource]="dataSource" class="mat-elevation-z8 print-table demo-table">
   <ng-container *ngFor="let column of columns; let i = index" matColumnDef="{{ column.field }}">
-    <mat-header-cell style="page-break-inside: avoid; font-size: large; font-weight: bold; color: steelblue" *matHeaderCellDef>
+    <mat-header-cell class="print-style" *matHeaderCellDef>
       {{column.field === 'role_type' ? 'ROLE' : column.field?.toUpperCase()}}
     </mat-header-cell>
       <mat-cell style="page-break-inside: avoid;" *matCellDef="let row"> {{row[column.field] }}</mat-cell>

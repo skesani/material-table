@@ -61,7 +61,8 @@ export class RowGroupPrintComponent implements OnInit {
             item.name = item.person.name;
           });
           if (this.printService.getOption() !== null  && this.printService.getOption() !== undefined) {
-            objects = objects.filter(x => x.district.toString() === this.printService.getOption());
+            objects = objects.filter(el => this.printService.getOption().includes(el.district));
+            //  objects = objects.filter(x => x.district.toString() === this.printService.getOption());
           }
           this._alldata = objects;
           this.dataSource.data = this.addGroups(this._alldata, this.groupByColumns);
@@ -70,10 +71,15 @@ export class RowGroupPrintComponent implements OnInit {
         },
         (err: any) => console.log(err),
         () => {
-          this.printService.onDataReady();
+          if (this.printService.getIsMobile()) {
+            this.printService.onMobileDataReady();
+          } else {
+            this.printService.onDataReady();
+          }
         }
       );
   }
+
 
   // below is for grid row grouping
   customFilterPredicate(data: any | Group, filter: string): boolean {

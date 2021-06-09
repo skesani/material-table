@@ -7,14 +7,22 @@ import {Router} from '@angular/router';
 export class PrintService implements OnDestroy {
   private state: 'close' | 'open' = 'close';
   isPrinting = false;
-  private _option: string;
-
+  private _option: Array<number>;
+  private _isMobile: boolean;
   getOption(): any {
     return this._option;
   }
 
-  setOption(value: string): any {
+  setOption(value: Array<number>): any {
     this._option = value;
+  }
+
+  getIsMobile(): boolean {
+    return this._isMobile;
+  }
+
+  setIsMobile(value: boolean): void {
+    this._isMobile = value;
   }
 
   constructor(private router: Router) {
@@ -37,11 +45,15 @@ export class PrintService implements OnDestroy {
     }
   }
 
-  printTableDocument(documentName: string, option?: string): void {
+  printTableDocument(documentName: string, option?: Array<number>): void {
     this.isPrinting = true;
     this.setOption(option);
-   // this.router.navigate(['print', documentName]);
-    this.router.navigate([{ outlets: { print: ['print', documentName] } }], { skipLocationChange: true });
+    if (this.getIsMobile()){
+      this.router.navigateByUrl('/(mobile:mobileprint)');
+    } else {
+      this.router.navigate([{ outlets: { print: ['print', documentName] } }], { skipLocationChange: true });
+    }
+    // this.router.navigate([{ outlets: { print: ['print', documentName] } }], { skipLocationChange: true });
 
   }
 
@@ -52,6 +64,15 @@ export class PrintService implements OnDestroy {
       this.isPrinting = false;
       this.setOption(null);
       this.router.navigateByUrl('table');
+    });
+  }
+
+  onMobileDataReady(): void {
+    setTimeout(() => {
+      const onPrintFinished = (printed) => console.log('do something...');
+      onPrintFinished(window.print());
+      this.isPrinting = false;
+      this.setOption(null);
     });
   }
 

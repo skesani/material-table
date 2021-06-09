@@ -5,8 +5,8 @@ import {RowGroupPrintComponent} from './row-group-print/row-group-print.componen
 import {PrintLayoutComponent} from './print-layout/print-layout.component';
 
 const routes: Routes = [
-  {path: '**', redirectTo: 'table'},
   {path: 'table', component: MaterialRowGroupComponent},
+  {path: 'mobileprint', outlet: 'mobile', component: RowGroupPrintComponent},
   { path: 'print',
     outlet: 'print',
     component: PrintLayoutComponent,
@@ -14,6 +14,7 @@ const routes: Routes = [
       { path: 'printing', component: RowGroupPrintComponent }
     ]
   },
+  {path: '**', redirectTo: 'table'},
 ];
 
 @NgModule({

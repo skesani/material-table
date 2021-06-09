@@ -1,6 +1,6 @@
-import {Component, OnInit, ViewChild,} from '@angular/core';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
 
-import { CarTableDataService } from './car-table-data.service';
+import {CarTableDataService} from './car-table-data.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatMenuTrigger} from '@angular/material/menu';
 import {PrintService} from '../print-layout/print.service';
@@ -30,6 +30,9 @@ export class MaterialRowGroupComponent implements OnInit {
   columns: any[];
   displayedColumns: string[];
   groupByColumns: string[] = [];
+  rowClicked: Array<number>;
+  screenWidth: number;
+  screenHeight: number;
 
   constructor(protected dataSourceService: CarTableDataService, public printService: PrintService) {
 
@@ -53,6 +56,9 @@ export class MaterialRowGroupComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.screenWidth = window.innerWidth;
+    this.screenHeight = window.innerHeight;
+    this.rowClicked = [];
     this.dataSourceService.getAllData()
       .subscribe(
         ({objects}: any) => {
@@ -66,6 +72,10 @@ export class MaterialRowGroupComponent implements OnInit {
         },
         (err: any) => console.log(err)
       );
+  }
+
+  isMobile(): any {
+    return !(this.screenWidth >= 768);
   }
 
   // below is for grid row grouping
@@ -96,9 +106,21 @@ export class MaterialRowGroupComponent implements OnInit {
     return parent.visible && parent.expanded;
   }
 
+  @HostListener('window:resize', ['$event'])
+  onWindowResize(event): any {
+    this.screenWidth = window.innerWidth;
+    this.screenHeight = window.innerHeight;
+  }
+
   groupHeaderClick(row): any {
     row.expanded = !row.expanded;
     this.dataSource.filter = performance.now().toString();  // bug here need to fix
+    if (row.expanded) {
+      this.rowClicked.push(row.district);
+    } else if (this.rowClicked.indexOf(row.district) > -1) {
+      this.rowClicked = this.rowClicked.filter(element => ![row.district].includes(element));
+    }
+    console.log(this.rowClicked);
   }
 
   addGroups(data: any[], groupByColumns: string[]): any[] {
@@ -149,7 +171,13 @@ export class MaterialRowGroupComponent implements OnInit {
     return item.level;
   }
 
-  onPrintTable(option?: string): void {
-    this.printService.printTableDocument('printing', option);
+  onPrintTable(): void {
+    this.printService.setIsMobile(this.isMobile());
+    this.printService.printTableDocument('printing');
+  }
+
+  onExpandedPrintTable(): void {
+    this.printService.setIsMobile(this.isMobile());
+    this.printService.printTableDocument('printing', this.rowClicked);
   }
 }
