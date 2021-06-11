@@ -71,11 +71,11 @@ export class RowGroupPrintComponent implements OnInit {
         },
         (err: any) => console.log(err),
         () => {
-          if (this.printService.getIsMobile()) {
+         /* if (this.printService.getIsMobile()) {
             this.printService.onMobileDataReady();
           } else {
             this.printService.onDataReady();
-          }
+          }*/
         }
       );
   }

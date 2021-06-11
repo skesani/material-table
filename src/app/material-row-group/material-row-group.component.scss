@@ -70,3 +70,20 @@ section {
   justify-content: center;
   width: 120px;
 }
+
+
+.print-style {
+  font-size: large;
+  font-weight: bold;
+  color: steelblue;
+}
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen and (min-device-width: 480px){
+  .print-style {
+    page-break-inside: avoid;
+    font-size: 10px;
+    font-weight: bold;
+    color: steelblue;
+  }
+}

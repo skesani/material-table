@@ -49,7 +49,7 @@ export class PrintService implements OnDestroy {
     this.isPrinting = true;
     this.setOption(option);
     if (this.getIsMobile()){
-      this.router.navigateByUrl('/(mobile:mobileprint)');
+      this.router.navigateByUrl('/mobileprint');
     } else {
       this.router.navigate([{ outlets: { print: ['print', documentName] } }], { skipLocationChange: true });
     }

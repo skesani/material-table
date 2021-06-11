@@ -48,6 +48,11 @@ body {
 }
 
 @media print {
+
+  .page-number{
+    content: counter(page) ' of ' counter(pages);
+  }
+
   .isPrinting > * {
     display: none;
   }

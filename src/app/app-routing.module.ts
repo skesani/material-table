@@ -6,7 +6,7 @@ import {PrintLayoutComponent} from './print-layout/print-layout.component';
 
 const routes: Routes = [
   {path: 'table', component: MaterialRowGroupComponent},
-  {path: 'mobileprint', outlet: 'mobile', component: RowGroupPrintComponent},
+  {path: 'mobileprint', component: RowGroupPrintComponent},
   { path: 'print',
     outlet: 'print',
     component: PrintLayoutComponent,

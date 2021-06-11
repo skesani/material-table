@@ -1,11 +1,11 @@
-<div class="app">
-  <app-sidenav *ngIf="!printService.isPrinting">
-    <app-toolbar></app-toolbar>
+<div class="app" *ngIf="!printService.isPrinting">
     <router-outlet></router-outlet>
-  </app-sidenav>
 </div>
 
 <div *ngIf="printService.isPrinting">
   <router-outlet name="print"></router-outlet>
-  <router-outlet name="mobile"></router-outlet>
+</div>
+
+<div *ngIf="printService.getIsMobile()">
+ <app-row-group-print></app-row-group-print>
 </div>

@@ -7,18 +7,17 @@ mat-row:nth-child(odd) {
 }
 
 .print-style {
-  font-size: large;
   font-weight: bold;
   color: steelblue;
 }
 
-/* Smartphones (portrait and landscape) ----------- */
-@media only screen and (min-device-width: 480px){
-  .print-style {
-    page-break-inside: avoid;
-    font-size: 10px;
-    font-weight: bold;
-    color: steelblue;
-  }
+.mat-row, .mat-header-row {
+   width: 250vw;
+ }
+.mat-header-row {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 1;
+  background-color: inherit;
 }
-

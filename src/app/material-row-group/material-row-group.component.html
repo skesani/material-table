@@ -9,7 +9,7 @@
 
 <mat-table style="margin: 1%" [dataSource]="dataSource" class="mat-elevation-z8 print-table demo-table">
   <ng-container *ngFor="let column of columns; let i = index" matColumnDef="{{ column.field }}">
-    <mat-header-cell style="font-weight: bold; color: steelblue" *matHeaderCellDef>
+    <mat-header-cell class="print-style" *matHeaderCellDef>
       {{column.field === 'role_type' ? 'ROLE' : column.field?.toUpperCase()}}
     </mat-header-cell>
     <mat-cell *matCellDef="let row"> {{row[column.field]}}</mat-cell>
@@ -29,3 +29,23 @@
   <mat-row *matRowDef="let row; columns: ['groupHeader']; when: isGroup" (click)="groupHeaderClick(row)"> </mat-row>
 
 </mat-table>
+
+
+<!--
+<mat-table [dataSource]="dataSource" class="mat-elevation-z8 print-table demo-table">
+  <ng-container *ngFor="let column of columns; let i = index" matColumnDef="{{ column.field }}">
+    <mat-header-cell class="print-style" *matHeaderCellDef>
+      {{column.field === 'role_type' ? 'ROLE' : column.field?.toUpperCase()}}
+    </mat-header-cell>
+    <mat-cell style="page-break-inside: avoid;" *matCellDef="let row">
+      {{row[column.field] }}</mat-cell>
+  </ng-container>
+  <mat-header-row style="page-break-inside: avoid;" mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row style="page-break-inside: avoid;" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  &lt;!&ndash; Group header &ndash;&gt;
+  <ng-container matColumnDef="groupHeader">
+    <mat-cell style="page-break-inside: avoid;" colspan="999" *matCellDef="let group">
+    </mat-cell>
+  </ng-container>
+  <mat-row *matRowDef="let row; columns: ['groupHeader']; when: isGroup" (click)="groupHeaderClick(row)"> </mat-row>
+</mat-table>-->
