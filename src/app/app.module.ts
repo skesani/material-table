@@ -23,6 +23,7 @@ import {PrintLayoutComponent} from './print-layout/print-layout.component';
 import {PrintService} from './print-layout/print.service';
 import {InvoiceComponent} from './invoice/invoice.component';
 import { RowGroupPrintComponent } from './row-group-print/row-group-print.component';
+import {MatSortModule} from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -34,19 +35,20 @@ import { RowGroupPrintComponent } from './row-group-print/row-group-print.compon
     InvoiceComponent,
     RowGroupPrintComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    HttpClientModule,
-    MatButtonModule,
-    MatTableModule,
-    AppRoutingModule,
-    MatMenuModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatToolbarModule,
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        HttpClientModule,
+        MatButtonModule,
+        MatTableModule,
+        AppRoutingModule,
+        MatMenuModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        MatSortModule,
+    ],
   providers: [CarTableDataService, SidenavService, ThemingService, PrintService],
   bootstrap: [AppComponent]
 })

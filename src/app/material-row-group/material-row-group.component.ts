@@ -1,9 +1,12 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, HostListener, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 
 import {CarTableDataService} from './car-table-data.service';
-import {MatTableDataSource} from '@angular/material/table';
+import {MatTable, MatTableDataSource} from '@angular/material/table';
 import {MatMenuTrigger} from '@angular/material/menu';
 import {PrintService} from '../print-layout/print.service';
+import {MatSort} from '@angular/material/sort';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+
 
 export class Group {
   level = 0;
@@ -18,25 +21,44 @@ export class Group {
 @Component({
   selector: 'app-material-row-group',
   templateUrl: './material-row-group.component.html',
-  styleUrls: ['./material-row-group.component.scss']
+  styleUrls: ['./material-row-group.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class MaterialRowGroupComponent implements OnInit {
   title = 'Grid Grouping';
 
-  public dataSource = new MatTableDataSource<any | Group>([]);
+  public dataSource = new MatTableDataSource<any | Group| Congress>([]);
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
-  _alldata: any[];
+  show = false;
+  _alldata: Congress[] = [];
+  columnsToDisplay: any[];
   columns: any[];
-  displayedColumns: string[];
+  displayedColumns: any[];
   groupByColumns: string[] = [];
   rowClicked: Array<number>;
   screenWidth: number;
   screenHeight: number;
+  innerDisplayedColumns = ['street', 'zipCode', 'city'];
+  expandedElement: Congress | null;
+  @ViewChildren('innerSort') innerSort: QueryList<MatSort>;
+  @ViewChildren('innerTables') innerTables: QueryList<MatTable<Address>>;
 
-  constructor(protected dataSourceService: CarTableDataService, public printService: PrintService) {
+
+
+  @ViewChild('outerSort', { static: true }) sort: MatSort;
+
+  constructor(protected dataSourceService: CarTableDataService, public printService: PrintService,  private cd: ChangeDetectorRef) {
 
     this.columns = [{
+      field: 'icon'
+    }, {
       field: 'name'
     }, {
       field: 'role_type'
@@ -64,14 +86,36 @@ export class MaterialRowGroupComponent implements OnInit {
         ({objects}: any) => {
           objects.forEach((item, index) => {
             item.name = item.person.name;
+            item.addresses = [];
+            const addDetails  = {
+              street: 'Street 1',
+              zipCode: '78542',
+              city: 'Kansas'
+            };
+            addDetails.street = item.extra.address;
+            item.addresses.push(addDetails);
           });
-          this._alldata = objects;
+          objects.forEach(user => {
+            if (user.addresses && Array.isArray(user.addresses) && user.addresses.length) {
+              this._alldata = [...this._alldata, {...user, addresses: new MatTableDataSource(user.addresses)}];
+            } else {
+              this._alldata = [...this._alldata, user];
+            }
+          });
+          console.log(this._alldata);
           this.dataSource.data = this.addGroups(this._alldata, this.groupByColumns);
           this.dataSource.filterPredicate = this.customFilterPredicate.bind(this);
           this.dataSource.filter = performance.now().toString();
         },
         (err: any) => console.log(err)
       );
+    console.log(this.displayedColumns);
+  }
+  toggleRow(element: Congress) {
+    this.show= true;
+    element.addresses && ((element.addresses) as MatTableDataSource<Address>).data.length ? (this.expandedElement = this.expandedElement === element ? null : element) : null;
+    this.cd.detectChanges();
+    this.innerTables.forEach((table, index) => (table.dataSource as MatTableDataSource<Address>).sort = this.innerSort.toArray()[index]);
   }
 
   isMobile(): any {
@@ -180,4 +224,58 @@ export class MaterialRowGroupComponent implements OnInit {
     this.printService.setIsMobile(this.isMobile());
     this.printService.printTableDocument('printing', this.rowClicked);
   }
+}
+
+export interface Address {
+  street: string;
+  zipCode: string;
+  city: string;
+}
+
+export interface Congress {
+  caucus?: null;
+  congress_numbers?: (number)[] | null;
+  current: boolean;
+  description: string;
+  district: number;
+  enddate: string;
+  extra: Extra;
+  leadership_title?: null;
+  party: string;
+  person: Person;
+  phone: string;
+  role_type: string;
+  role_type_label: string;
+  senator_class?: null;
+  senator_rank?: null;
+  startdate: string;
+  state: string;
+  title: string;
+  title_long: string;
+  website: string;
+  addresses?: Address[] | MatTableDataSource<Address>;
+}
+export interface Extra {
+  address: string;
+  office: string;
+  rss_url: string;
+}
+export interface Person {
+  bioguideid: string;
+  birthday: string;
+  cspanid: number;
+  firstname: string;
+  gender: string;
+  gender_label: string;
+  lastname: string;
+  link: string;
+  middlename: string;
+  name: string;
+  namemod: string;
+  nickname: string;
+  osid: string;
+  pvsid: string;
+  sortname: string;
+  twitterid: string;
+  youtubeid: string;
 }
