@@ -92,7 +92,7 @@ export class MaterialRowGroupComponent implements OnInit {
               zipCode: '78542',
               city: 'Kansas'
             };
-            addDetails.street = item.extra.address;
+            addDetails.street = item.extra?.address;
             item.addresses.push(addDetails);
           });
           objects.forEach(user => {

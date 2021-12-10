@@ -68,15 +68,13 @@ export class RowGroupPrintComponent implements OnInit {
           this.dataSource.data = this.addGroups(this._alldata, this.groupByColumns);
           this.dataSource.filterPredicate = this.customFilterPredicate.bind(this);
           this.dataSource.filter = performance.now().toString();
-        },
-        (err: any) => console.log(err),
-        () => {
-         /* if (this.printService.getIsMobile()) {
+          if (this.printService.getIsMobile()) {
             this.printService.onMobileDataReady();
           } else {
             this.printService.onDataReady();
-          }*/
-        }
+          }
+        },
+        (err: any) => console.log(err)
       );
   }
 
